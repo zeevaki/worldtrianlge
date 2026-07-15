@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WorldTriangle — A Proposal for Layered Sovereignty</title>
+<meta name="description" content="A personal proposal, not a research consensus: three pillars — Law, Education, Compassion — for a world organized beyond the nation-state.">
+<style>
+  :root {
+    color-scheme: light;
+    --page-bg: #EDE7D9;
+    --surface: #F7F3E7;
+    --surface-raised: #FBF8EF;
+    --ink: #1C1812;
+    --ink-secondary: #52483A;
+    --muted: #8B7F6B;
+    --hairline: #D9D0BC;
+    --law: #2C4A73;
+    --law-ink: #23395A;
+    --education: #8F5F1F;
+    --education-bright: #A8752B;
+    --compassion: #8C3B4C;
+    --gold: #A8752B;
+    --shadow: rgba(28,24,18,0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --page-bg: #14110D;
+      --surface: #1D1912;
+      --surface-raised: #241F17;
+      --ink: #F1EAD9;
+      --ink-secondary: #C9BEA8;
+      --muted: #8F8571;
+      --hairline: #332C20;
+      --law: #8FADD9;
+      --law-ink: #9DBBE0;
+      --education: #D9A94C;
+      --education-bright: #D9A94C;
+      --compassion: #D98BA0;
+      --gold: #D9A94C;
+      --shadow: rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --page-bg: #14110D;
+    --surface: #1D1912;
+    --surface-raised: #241F17;
+    --ink: #F1EAD9;
+    --ink-secondary: #C9BEA8;
+    --muted: #8F8571;
+    --hairline: #332C20;
+    --law: #8FADD9;
+    --law-ink: #9DBBE0;
+    --education: #D9A94C;
+    --education-bright: #D9A94C;
+    --compassion: #D98BA0;
+    --gold: #D9A94C;
+    --shadow: rgba(0,0,0,0.35);
+  }
+  :root[data-theme="light"] {
+    color-scheme: light;
+    --page-bg: #EDE7D9;
+    --surface: #F7F3E7;
+    --surface-raised: #FBF8EF;
+    --ink: #1C1812;
+    --ink-secondary: #52483A;
+    --muted: #8B7F6B;
+    --hairline: #D9D0BC;
+    --law: #2C4A73;
+    --law-ink: #23395A;
+    --education: #8F5F1F;
+    --education-bright: #A8752B;
+    --compassion: #8C3B4C;
+    --gold: #A8752B;
+    --shadow: rgba(28,24,18,0.08);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  body {
+    margin: 0;
+    background: var(--page-bg);
+    color: var(--ink);
+    font-family: "Iowan Old Style", "STIX Two Text", "Palatino Linotype", Palatino, Georgia, "Noto Serif", serif;
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .ui-font { font-family: "Segoe UI", -apple-system, "Helvetica Neue", Arial, sans-serif; }
+  .mono { font-family: "Cascadia Mono", "SF Mono", Consolas, "Liberation Mono", monospace; }
+
+  a { color: var(--law); }
+  :root[data-theme="dark"] a, @media (prefers-color-scheme: dark) { }
+
+  ::selection { background: var(--gold); color: var(--surface); }
+
+  /* ---------- Skip link / focus ---------- */
+  .skip-link {
+    position: absolute; left: -999px; top: 0; z-index: 200;
+    background: var(--surface-raised); color: var(--ink);
+    padding: 0.75rem 1.25rem; border-radius: 0.25rem;
+  }
+  .skip-link:focus { left: 1rem; top: 1rem; }
+  a:focus-visible, button:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--gold); outline-offset: 3px;
+  }
+
+  /* ---------- Layout shell ---------- */
+  .measure { max-width: 42rem; }
+  .wrap { max-width: 78rem; margin: 0 auto; padding: 0 1.75rem; }
+  section { position: relative; }
+
+  /* ---------- Nav ---------- */
+  header.site-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: color-mix(in srgb, var(--page-bg) 88%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--hairline);
+  }
+  .nav-inner {
+    max-width: 78rem; margin: 0 auto; padding: 0.85rem 1.75rem;
+    display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: "Segoe UI", -apple-system, sans-serif;
+    font-weight: 600; letter-spacing: 0.02em; font-size: 1.05rem;
+    color: var(--ink); text-decoration: none;
+  }
+  .brand svg { flex: none; }
+  .nav-links {
+    display: flex; gap: 1.6rem; list-style: none; margin: 0; padding: 0;
+    font-family: "Segoe UI", -apple-system, sans-serif;
+    font-size: 0.85rem; letter-spacing: 0.03em;
+  }
+  .nav-links a { text-decoration: none; color: var(--ink-secondary); }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links .dot { opacity: 0.55; }
+  #law-link { border-bottom: 2px solid transparent; }
+  .nav-toggle { display: none; }
+
+  @media (max-width: 46rem) {
+    .nav-links { display: none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 4.5rem 0 3.5rem;
+    overflow: hidden;
+  }
+  .hero-inner {
+    display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 3rem; align-items: center;
+  }
+  @media (max-width: 60rem) {
+    .hero-inner { grid-template-columns: 1fr; }
+  }
+  .eyebrow {
+    font-family: "Segoe UI", -apple-system, sans-serif;
+    font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--muted); margin: 0 0 1rem;
+  }
+  h1 {
+    font-size: clamp(2.3rem, 5vw, 3.6rem);
+    line-height: 1.08; margin: 0 0 1.2rem; text-wrap: balance;
+    font-weight: 600;
+  }
+  .hero p.lede {
+    font-size: 1.2rem; color: var(--ink-secondary); max-width: 34rem;
+    margin: 0 0 1.8rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; text-decoration: none;
+    font-family: "Segoe UI", -apple-system, sans-serif;
+    font-size: 0.9rem; letter-spacing: 0.02em;
+    padding: 0.75rem 1.4rem; border: 1px solid var(--ink);
+    color: var(--ink); border-radius: 2px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .btn.primary { background: var(--ink); color: var(--surface); }
+  .btn.primary:hover { background: var(--law); border-color: var(--law); }
+  .btn.ghost:hover { background: var(--surface-raised); }
+
+  .hero-figure { position: relative; aspect-ratio: 1 / 0.92; }
+  #triangle-canvas { width: 100%; height: 100%; display: block; }
+
+  /* ---------- Preamble / method note ---------- */
+  .note-box {
+    background: var(--surface); border: 1px solid var(--hairline);
+    border-radius: 3px; padding: 1.6rem 1.8rem; margin: 0 auto;
+  }
+  .note-box h2 {
+    font-family: "Segoe UI", -apple-system, sans-serif;
+    font-size: 0.8rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); margin: 0 0 0.8rem; font-weight: 600;
+  }
+  .note-box p { margin: 0 0 0.9rem; color: var(--ink-secondary); }
+  .note-box p:last-child { margin-bottom: 0; }
+
+  .section-pad { padding: 4rem 0; }
+  .section-pad.tight { padding: 2.5rem 0; }
+  .hr {
+    border: none; border-top: 1px solid var(--hairline); margin: 0;
+  }
+
+  /* ---------- Pillar section header ---------- */
+  .pillar-head {
+    display: flex; align-items: baseline; gap: 1.1rem; margin-bottom: 2.6rem;
+    padding-bottom: 1.4rem; border-bottom: 2px solid var(--pillar-color, var(--ink));
+  }
+  .pillar-mark {
+    font-family: "Cascadia Mono","SF Mono",Consolas,monospace;
+    font-size: 0.85rem; color: var(--pillar-color, var(--ink));
+    border: 1px solid var(--pillar-color, var(--ink)); border-radius: 50%;
+    width: 2.1rem; height: 2.1rem; flex: none;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pillar-head h2 {
+    font-size: clamp(1.9rem, 3.4vw, 2.6rem); margin: 0; line-height: 1.1;
+  }
+  .pillar-head .pillar-sub {
+    font-family: "Segoe UI", -apple-system, sans-serif;
+    font-size: 0.85rem; letter-spacing: 0.06em; color: var(--muted);
+    display: block; margin-top: 0.3rem;
+  }
+  section.pillar-law { --pillar-color: var(--law); }
+  section.pillar-education { --pillar-color: var(--education-bright); }
+  section.pillar-compassion { --pillar-color: var(--compassion); }
+
+  .subsection { margin-bottom: 3rem; }
+  .subsection:last-child { margin-bottom: 0; }
+  .subsection h3 {
+    font-size: 1.4rem; margin: 0 0 0.9rem; line-height: 1.25;
+  }
+  .subsection .kicker {
+    font-family: "Cascadia Mono","SF Mono",Consolas,monospace;
+    font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--pillar-color, var(--muted)); display: block; margin-bottom: 0.5rem;
+  }
+  .two-col {
+    display: grid; grid-template-columns: 1.3fr 1fr; gap: 2.5rem; align-items: start;
+  }
+  @media (max-width: 58rem) { .two-col { grid-template-columns: 1fr; } }
+
+  blockquote.pull {
+    font-size: 1.35rem; font-style: italic; line-height: 1.5;
+    color: var(--ink); border-left: 3px solid var(--pillar-color, var(--gold));
+    margin: 1.8rem 0; padding: 0.2rem 0 0.2rem 1.4rem;
+  }
+  blockquote.pull cite {
+    display: block; font-style: normal; font-family: "Segoe UI", -apple-system, sans-serif;
+    font-size: 0.78rem; color: var(--muted); margin-top: 0.6rem; letter-spacing: 0.02em;
+  }
+
+  .fig {
+    border: 1px dashed var(--hairline); border-radius: 3px;
+    padding: 1.4rem; background: var(--surface);
+  }
+  .fig figcaption {
+    font-family: "Segoe UI", -apple-system, sans-serif;
+    font-size: 0.78rem; color: var(--muted); margin-top: 0.8rem; line-height: 1.5;
+  }
+  .fig.placeholder {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    min-height: 12rem; text-align: center; gap: 0.6rem; color: var(--muted);
+  }
+  .fig.placeholder .ph-icon {
+    width: 2.6rem; height: 2.6rem; border: 1px dashed var(--muted); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; font-family: "Segoe UI",sans-serif; font-size: 1.2rem;
+  }
+
+  sup.cite { font-size: 0.7em; }
+  sup.cite a { text-decoration: none; color: var(--pillar-color, var(--law)); font-weight: 600; }
+
+  .precedent-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 1.6rem;
+  }
+  @media (max-width: 58rem) { .precedent-grid { grid-template-columns: 1fr; } }
+  .precedent-card {
+    background: var(--surface); border: 1px solid var(--hairline); border-radius: 3px;
+    padding: 1.3rem 1.4rem;
+  }
+  .precedent-card .yr {
+    font-family: "Cascadia Mono","SF Mono",Consolas,monospace; font-size: 0.75rem; color: var(--muted);
+  }
+  .precedent-card h4 { margin: 0.3rem 0 0.6rem; font-size: 1.05rem; }
+  .precedent-card p { margin: 0; font-size: 0.95rem; color: var(--ink-secondary); }
+
+  /* ---------- Chart ---------- */
+  .viz-root { color-scheme: inherit; }
+  .chart-bars { display: flex; flex-direction: column; gap: 0.55rem; margin-top: 1.2rem; }
+  .chart-row { display: grid; grid-template-columns: 6.5rem 1fr 3.2rem; align-items: center; gap: 0.7rem; }
+  .chart-row .label { font-family: "Segoe UI", -apple-system, sans-serif; font-size: 0.85rem; color: var(--ink-secondary); text-align: right; }
+  .chart-row .track { background: var(--page-bg); border: 1px solid var(--hairline); border-radius: 2px; height: 1.35rem; position: relative; }
+  .chart-row .fill { height: 100%; border-radius: 1px; }
+  .chart-row .val { font-variant-numeric: tabular-nums; font-family: "Segoe UI", -apple-system, sans-serif; font-size: 0.85rem; color: var(--ink-secondary); }
+
+  /* ---------- Case study ---------- */
+  .case-study {
+    background: var(--surface); border: 1px solid var(--hairline); border-radius: 4px;
+    padding: 2.2rem 2.4rem; margin-top: 1rem;
+  }
+  .case-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1.2rem; }
+  @media (max-width: 50rem) { .case-grid { grid-template-columns: 1fr; } }
+  .case-grid h4 { margin: 0 0 0.5rem; font-size: 1.05rem; }
+  .open-q {
+    border-top: 1px solid var(--hairline); margin-top: 1.6rem; padding-top: 1.4rem;
+  }
+
+  /* ---------- Sources ---------- */
+  .sources ol { padding-left: 1.3rem; margin: 0; }
+  .sources li { margin-bottom: 0.7rem; font-size: 0.95rem; color: var(--ink-secondary); }
+  .sources li::marker { font-family: "Cascadia Mono","SF Mono",Consolas,monospace; color: var(--muted); }
+
+  footer {
+    padding: 3rem 0 4rem; border-top: 1px solid var(--hairline);
+    font-family: "Segoe UI", -apple-system, sans-serif; font-size: 0.85rem; color: var(--muted);
+  }
+  footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+
+  .toc-inline {
+    display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.4rem;
+    font-family: "Segoe UI", -apple-system, sans-serif; font-size: 0.82rem;
+  }
+  .toc-inline a {
+    text-decoration: none; padding: 0.4rem 0.85rem; border: 1px solid var(--hairline);
+    border-radius: 999px; color: var(--ink-secondary);
+  }
+  .toc-inline a:hover { border-color: var(--ink); color: var(--ink); }
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link ui-font">Skip to content</a>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">
+      <svg width="22" height="20" viewBox="0 0 22 20" aria-hidden="true">
+        <polygon points="11,1 21,19 1,19" fill="none" stroke="currentColor" stroke-width="1.6"/>
+        <circle cx="11" cy="1" r="1.8" fill="var(--law)"/>
+        <circle cx="21" cy="19" r="1.8" fill="var(--compassion)"/>
+        <circle cx="1" cy="19" r="1.8" fill="var(--education-bright)"/>
+      </svg>
+      WorldTriangle
+    </a>
+    <ul class="nav-links">
+      <li><a href="#law">Law</a></li>
+      <li><span class="dot">·</span></li>
+      <li><a href="#education">Education</a></li>
+      <li><span class="dot">·</span></li>
+      <li><a href="#compassion">Compassion</a></li>
+      <li><span class="dot">·</span></li>
+      <li><a href="#case-study">Case Study</a></li>
+      <li><span class="dot">·</span></li>
+      <li><a href="#sources">Sources</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="top">
+  <div class="wrap hero-inner">
+    <div>
+      <p class="eyebrow ui-font">A proposal — not a research consensus</p>
+      <h1>Three pillars for a world organized beyond the nation‑state.</h1>
+      <p class="lede">Borders are a recent invention. The problems that now cross them — climate collapse, unaccountable power, war fought in nationalism's name — are not. This is one person's case for <strong>Law</strong>, <strong>Education</strong>, and <strong>Compassion</strong> as the three points a different world could be built on.</p>
+      <div class="hero-actions">
+        <a class="btn primary ui-font" href="#preamble">Read the proposal</a>
+        <a class="btn ghost ui-font" href="#case-study">See it applied</a>
+      </div>
+    </div>
+    <div class="hero-figure">
+      <canvas id="triangle-canvas" aria-hidden="true"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PREAMBLE ================= -->
+<section class="section-pad tight" id="preamble">
+  <div class="wrap" style="max-width:52rem;">
+    <div class="note-box">
+      <h2>A note on what this is</h2>
+      <p>This site makes an argument; it does not report a scholarly consensus. Where it describes documented events — a Security Council vote, a treaty, a historical constitution — those claims are sourced and checkable, and the <a href="#sources">Sources</a> section names where to check them. Where it proposes a solution, that is opinion: mine, offered for debate rather than delivered as settled fact.</p>
+      <p>The strongest version of this argument treats the two separately. So does this page. Diagnosis is argued from evidence. The proposal is argued from values — and it should be judged, and argued with, on that basis.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+
+<!-- ================= PILLAR: LAW ================= -->
+<section class="pillar-law section-pad" id="law">
+  <div class="wrap">
+    <div class="pillar-head">
+      <span class="pillar-mark">I</span>
+      <div>
+        <h2>Law</h2>
+        <span class="pillar-sub">Who is accountable, and to whom, when the harm crosses a border</span>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <span class="kicker">The diagnosis</span>
+      <h3>The border is where accountability goes to die</h3>
+      <div class="two-col">
+        <div>
+          <p>The nation-state system was built to answer one question — who governs this land — and it answers that question reasonably well. It was never built to answer a harder one: who is accountable when a government commits harm inside its own borders, or when the body meant to adjudicate that harm is staffed by the very powers accused of it.</p>
+          <p>That gap is not hypothetical. The International Court of Justice is hearing a genocide case brought by South Africa against Israel over the conduct of the Gaza war, and the International Criminal Court has issued arrest warrants for Israeli and Hamas leaders alike<sup class="cite"><a href="#src-icc">1</a></sup> — an unusually direct test of whether international law can reach heads of state and government at all. In 2025, a BBC-commissioned documentary on the deaths of Gaza medical workers, "Gaza: Doctors Under Attack," was pulled by the broadcaster that funded it and aired instead on Channel 4, prompting on-stage criticism at the following year's BAFTA ceremony<sup class="cite"><a href="#src-bafta">2</a></sup> — a small, concrete instance of the wider pattern: the documentation exists, and institutional caution still gets in the way of it reaching people.</p>
+        </div>
+        <aside class="fig">
+          <strong style="font-family:'Segoe UI',sans-serif; font-size:0.85rem; letter-spacing:0.03em; color:var(--muted); text-transform:uppercase;">Why the Security Council can't be the answer on its own</strong>
+          <p style="margin-top:0.8rem; font-size:0.95rem; color:var(--ink-secondary);">Any one of the five permanent members can block Council action alone — including action responding to their own conduct or their allies'. The mechanism built to hold power accountable exempts the most powerful five by design.</p>
+        </aside>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <span class="kicker">The record</span>
+      <h3>Veto power, in practice</h3>
+      <p class="measure">Cumulative vetoes cast by the five permanent Security Council members, 1946–present. Figures are rounded and illustrative — consult the UN's own veto record for exact current counts<sup class="cite"><a href="#src-veto">3</a></sup>.</p>
+      <div class="chart-bars mono" role="img" aria-label="Cumulative Security Council vetoes: Russia/USSR about 155, United States about 86, United Kingdom about 30, China about 19, France about 18">
+        <div class="chart-row"><span class="label ui-font">Russia / USSR</span><div class="track"><div class="fill" style="width:100%; background:var(--law-ink);"></div></div><span class="val">~155</span></div>
+        <div class="chart-row"><span class="label ui-font">United States</span><div class="track"><div class="fill" style="width:55%; background:var(--law);"></div></div><span class="val">~86</span></div>
+        <div class="chart-row"><span class="label ui-font">United Kingdom</span><div class="track"><div class="fill" style="width:19%; background:color-mix(in srgb, var(--law) 70%, var(--surface));"></div></div><span class="val">~30</span></div>
+        <div class="chart-row"><span class="label ui-font">China</span><div class="track"><div class="fill" style="width:12%; background:color-mix(in srgb, var(--law) 45%, var(--surface));"></div></div><span class="val">~19</span></div>
+        <div class="chart-row"><span class="label ui-font">France</span><div class="track"><div class="fill" style="width:11%; background:color-mix(in srgb, var(--law) 30%, var(--surface));"></div></div><span class="val">~18</span></div>
+      </div>
+      <p class="measure" style="margin-top:1rem;">The pattern repeats regardless of which permanent member is holding the pen: Russia has used it to shield Syria from accountability over chemical weapons; the United States has used it to block ceasefire resolutions on Gaza; China and Russia together have vetoed action on Myanmar. The vetoing power changes. The structure that lets any of them do it does not.</p>
+    </div>
+
+    <div class="subsection">
+      <span class="kicker">When the institution fails anyway</span>
+      <h3>Two failures worth naming precisely</h3>
+      <div class="two-col">
+        <div>
+          <p><strong>Srebrenica, 1995.</strong> Dutch UN peacekeepers were stationed inside a Council-declared "safe area" when Bosnian Serb forces massacred more than 8,000 Bosniak men and boys. This is not an inference — the UN's own 1999 Secretary-General's report on the fall of Srebrenica called it a failure of the organization itself, not just of the states involved<sup class="cite"><a href="#src-srebrenica">4</a></sup>.</p>
+          <p><strong>Iraq, 2003.</strong> The United States and United Kingdom invaded without a second Security Council resolution authorizing it, over open objections from France, Russia, China, and Germany. The Council wasn't deadlocked by a veto that time — it was simply bypassed.</p>
+        </div>
+        <blockquote class="pull" style="align-self:center;">"The safe area had, in effect, ceased to exist."<cite>— UN Secretary-General's report on the fall of Srebrenica, 1999</cite></blockquote>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <span class="kicker">The proposal</span>
+      <h3>Layered sovereignty, not one government</h3>
+      <p class="measure">The alternative argued here is not a single world government administering everyone from one center — that idea has its own well-documented failure mode: unaccountable concentration of power, with no outside check left once it exists. The proposal is <strong>layered sovereignty</strong>: local and religious communities keep their own law for the matters closest to daily life, while one shared layer above them handles what no single community can handle alone — cross-border security, climate response, and the basic guarantee that no group is left undefended. Three precedents, from three different traditions, already tested pieces of this.</p>
+
+      <div class="precedent-grid">
+        <div class="precedent-card">
+          <span class="yr">622 CE</span>
+          <h4>The Constitution of Medina</h4>
+          <p>A founding document of the first Muslim polity that bound Jewish tribes and Muslim clans into one mutual-defense pact while leaving each community's internal law and courts intact. Widely cited by scholars as one of history's earliest written pluralistic constitutions<sup class="cite"><a href="#src-medina">5</a></sup> — legal autonomy underneath, shared security on top.</p>
+        </div>
+        <div class="precedent-card">
+          <span class="yr">1950</span>
+          <h4>The Schuman Declaration</h4>
+          <p>The founding text of what became the EU proposed pooling French and German coal and steel production so that war between them would become, in Robert Schuman's words, "not merely unthinkable, but materially impossible"<sup class="cite"><a href="#src-schuman">6</a></sup>. Neither nation dissolved. The border simply stopped being worth fighting over.</p>
+        </div>
+        <div class="precedent-card">
+          <span class="yr">1930</span>
+          <h4>Iqbal's Allahabad Address</h4>
+          <p>Some historians read Muhammad Iqbal's proposal for a consolidated Muslim-majority northwest India as autonomy <em>within</em> a federated India, not a call for full partition — though this is genuinely contested; others see it as an early step toward Pakistan's separate sovereignty<sup class="cite"><a href="#src-iqbal">7</a></sup>. Cited here for the reading that prefigures autonomy without a hard border, not as settled history.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <span class="kicker">Security without armies pointed at each other</span>
+      <h3>What replaces the standing army isn't nothing</h3>
+      <p class="measure">"We don't need armies" is too flat a claim, and it dodges the real question: who protects people when the disputes get physical? The honest version of the proposal is narrower — no <em>national</em> militaries postured against one another, replaced by one shared security framework, in the same spirit as Medina's mutual-defense pact or the way NATO and EU integration made intra-Western-European war between member states currently unthinkable. Pooling defense is not the same as abolishing it.</p>
+    </div>
+
+    <div class="subsection">
+      <span class="kicker">How nationalism borrows religion</span>
+      <h3>The weapon isn't the faith — it's the literalism stripped of its own limits</h3>
+      <p class="measure">Every major tradition has had a version of this: a core ethical teaching, hardened by absolutist readers into justification for violence the tradition's own scholars reject. In classical Islamic jurisprudence, armed jihad is bound by strict conditions — defense against aggression, proportionality, protection of non-combatants — and counter-terrorism scholarship on under-resourced madrasas in specific regions (research by scholars such as C. Christine Fair on the economics of militancy in Pakistan) documents how poverty and literalist instruction, disconnected from those classical constraints, become a recruitment pathway<sup class="cite"><a href="#src-fair">8</a></sup>. It is one instance of a wider pattern, not a claim about the religion as a whole: Hindu-nationalist (Hindutva) violence around contested sites like Ayodhya, Christian nationalism's entanglement with political violence in multiple countries, and the Buddhist-nationalist campaign against Myanmar's Rohingya all show the same mechanism — a tradition's compassionate core, hollowed out and redirected toward an in-group's dominance.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+
+<!-- ================= PILLAR: EDUCATION ================= -->
+<section class="pillar-education section-pad" id="education">
+  <div class="wrap">
+    <div class="pillar-head">
+      <span class="pillar-mark">II</span>
+      <div>
+        <h2>Education</h2>
+        <span class="pillar-sub">What a classroom builds when it stops building nationalism</span>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <span class="kicker">The proposed model</span>
+      <h3>Foundations first, then self-direction</h3>
+      <div class="two-col">
+        <div>
+          <p>The proposal here is frankly the most speculative on this page, and it's presented as a vision inspired by existing models, not as settled research. Primary school stays focused and universal: reading, arithmetic, and reasoning through roughly fifth grade. After that, the day stops being eight hours of seat time and shifts toward self-directed learning, community projects, and — for teenagers who want it — real entrepreneurship and civic work, mentored rather than assigned.</p>
+          <p>Existing models suggest pieces of this can work: the Sudbury Valley School's fully self-directed model, Finland's comparatively flexible post-primary curriculum, and decades of unschooling literature going back to John Holt. None of them removes the two objections a serious critic will raise immediately, and they're worth stating rather than hiding: self-directed models tend to work best for kids who already have supportive homes and resources, and "start a business" needs a hard, explicit line against anything resembling child labor. Community projects and mentored ventures, not unsupervised work for income, is the intended shape.</p>
+        </div>
+        <aside class="fig placeholder">
+          <span class="ph-icon">＋</span>
+          <span class="ui-font">Figure: proposed age/curriculum timeline — infographic slot</span>
+        </aside>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <span class="kicker">Already in progress</span>
+      <h3>Climate arithmetic instead of nationalist civics</h3>
+      <p class="measure">The clearest version of this isn't hypothetical — it's a live example. A K–5 math curriculum can teach counting, addition, and word problems through trees planted, cans recycled, and degrees of warming avoided, instead of flags and founding myths. Global citizenship, not nationalism, becomes the thing a child practices before they're old enough to be told which side of a border they were born on matters more than the planet both sides share.</p>
+    </div>
+
+    <div class="subsection">
+      <span class="kicker">A generational head start</span>
+      <h3>Minimalism didn't need to be taught — it's already a preference</h3>
+      <p class="measure">Anti-consumerism is not a hard sell to the generation that already prefers it. Declining car ownership in some urban markets, the growth of resale and thrift platforms, and the rise of "de-influencing" content pushing back against constant consumption all suggest the cultural ground for a simpler-by-choice lifestyle is already shifting under its own weight — education just needs to meet it rather than work against it.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+
+<!-- ================= PILLAR: COMPASSION ================= -->
+<section class="pillar-compassion section-pad" id="compassion">
+  <div class="wrap">
+    <div class="pillar-head">
+      <span class="pillar-mark">III</span>
+      <div>
+        <h2>Compassion</h2>
+        <span class="pillar-sub">The shared ethical ground under the legal and economic scaffolding</span>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <span class="kicker">Convergent wisdom</span>
+      <h3>We are one is a claim every tradition already makes</h3>
+      <div class="two-col">
+        <div>
+          <p>Imam Feisal Abdul Rauf's writing on Islam and pluralism argues that "submission to God" — the root meaning he draws from the word <em>muslim</em> — describes any sincere monotheist, not one confession alone<sup class="cite"><a href="#src-rauf">9</a></sup>. Read that way, the Constitution of Medina's model above stops being a specifically Islamic precedent and becomes a template: legal pluralism underneath, a shared ethical claim of unity on top — the same claim Sufi universalism, and the perennialist reading of scripture across traditions, has made for centuries.</p>
+          <p>That reading also resolves an inconsistency worth naming directly: a discriminatory tax on non-Muslims (jizya) has no place in a proposal built on this framing of the tradition. It survives here only as a historical fact about the Ottoman and earlier periods, not as a feature to revive.</p>
+        </div>
+        <blockquote class="pull">"What's right with America is what's right with Islam."<cite>— Imam Feisal Abdul Rauf</cite></blockquote>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <span class="kicker">A historical precedent for joy as unifier</span>
+      <h3>The Bhakti movement dissolved caste through devotion, not decree</h3>
+      <p class="measure">Medieval India's Bhakti poets and singers — Kabir and Guru Nanak foremost among them — built a devotional practice open across caste and religious lines at a time when both were treated as fixed. Historians credit the movement with real, if partial, social leveling, achieved through shared song and joy rather than legal reform<sup class="cite"><a href="#src-bhakti">10</a></sup>. It's the cultural register this proposal is reaching for: not a mandated belief, but a shared practice compassionate enough that the lines around it stop mattering as much.</p>
+    </div>
+
+    <div class="subsection">
+      <span class="kicker">Economics grounded in compassion, not ideology</span>
+      <h3>Bounded markets, taxed by conviction older than any modern political label</h3>
+      <div class="two-col">
+        <div>
+          <p>The economic model proposed here keeps markets — people trading, building, and pricing goods — but bounds them on two sides. On wealth: a progressive tax reaching the top, echoing <em>zakat</em>'s mandatory 2.5% levy on holdings above a threshold, a 1,400-year-old redistributive practice, alongside comparable ideas in Christian tithing and usury limits, and Hindu <em>dana</em>. On consumption: not degrowth as austerity, but Kate Raworth's "doughnut" frame — stay above a social floor and below an ecological ceiling — and Herman Daly's steady-state economics, which targets wellbeing rather than infinite material throughput<sup class="cite"><a href="#src-econ">11</a></sup>.</p>
+          <p>Presented as convergent wisdom rather than one tradition's system extended over everyone else, on purpose — consistent with the pluralism this whole proposal rests on.</p>
+        </div>
+        <aside class="fig placeholder">
+          <span class="ph-icon">＋</span>
+          <span class="ui-font">Figure: doughnut-economics diagram — infographic slot</span>
+        </aside>
+      </div>
+    </div>
+
+    <div class="subsection">
+      <span class="kicker">The unifying case</span>
+      <h3>Climate change is the collective-action problem borders can't survive</h3>
+      <p class="measure">No malice is required for this one — just misaligned incentive. A single country that cuts emissions while its competitors don't simply sacrifices growth for a shared benefit it can't capture alone; this is the textbook tragedy of the commons, and it's why the Paris Agreement's targets remain non-binding by design. Remote work, already normalized, quietly proves borders aren't required for economic participation. Everyone loses the same glaciers and the same coastlines regardless of the passport they hold — which is the one argument here that doesn't need a historical precedent, only a horizon.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+
+<!-- ================= CASE STUDY ================= -->
+<section class="section-pad" id="case-study">
+  <div class="wrap" style="max-width:56rem;">
+    <div class="pillar-head" style="border-bottom-color:var(--hairline);">
+      <span class="pillar-mark" style="color:var(--ink); border-color:var(--ink);">✻</span>
+      <div>
+        <h2>Applying it: two hard cases</h2>
+        <span class="pillar-sub">Where the proposal has to do real work, not just sound right</span>
+      </div>
+    </div>
+
+    <div class="case-study">
+      <p style="margin-top:0;">A "one world" proposal is only as strong as its answer to the hardest existing borders. Two are addressed directly rather than avoided.</p>
+      <div class="case-grid">
+        <div>
+          <h4>Israel – Palestine</h4>
+          <p style="color:var(--ink-secondary); font-size:0.97rem;">Not a two-state partition — a single shared jurisdiction, modeled on Medina's layering: local and religious courts for personal-status law in each community, one shared security and civil framework above it, with the EU's economic-integration logic (Schuman's "materially impossible" war) applied to Jerusalem and the settlements rather than to coal and steel.</p>
+        </div>
+        <div>
+          <h4>India – Pakistan – Kashmir</h4>
+          <p style="color:var(--ink-secondary); font-size:0.97rem;">Free movement restored across a currently militarized line, expanding the existing, if tiny, precedent of the Kartarpur Corridor — the visa-free crossing opened in 2019 for Sikh pilgrims — into the general case, under the same shared-security logic as above rather than either state's separate military posture.</p>
+        </div>
+      </div>
+      <div class="open-q">
+        <h4 style="margin-top:0;">The question this doesn't fully answer yet</h4>
+        <p style="color:var(--ink-secondary); font-size:0.97rem; margin-bottom:0;">Removing the border line answers whose flag flies where. It does not, by itself, answer who has the final say over policing and force in a place where two populations have spent generations afraid of the other side's answer to that question. A shared federal security layer is the proposed answer — but its exact design, and who a Kashmiri or an Israeli or a Palestinian would actually trust to hold it, is the unresolved part of this proposal, named here rather than glossed over.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="hr">
+
+<!-- ================= SOURCES ================= -->
+<section class="section-pad sources" id="sources">
+  <div class="wrap" style="max-width:52rem;">
+    <h2 style="font-size:1.6rem;">Sources &amp; further reading</h2>
+    <ol class="ui-font">
+      <li id="src-icc">South Africa v. Israel, International Court of Justice (filed Dec. 2023); International Criminal Court arrest warrant applications, Nov. 2024.</li>
+      <li id="src-bafta">Reporting on "Gaza: Doctors Under Attack," commissioned by the BBC and broadcast instead on Channel 4, 2025; referenced at the following BAFTA Television Awards.</li>
+      <li id="src-veto">United Nations Security Council veto record — Dag Hammarskjöld Library, "Veto List." Figures above are rounded approximations; consult the official record for exact current counts.</li>
+      <li id="src-srebrenica">"Report of the Secretary-General pursuant to General Assembly resolution 53/35: The fall of Srebrenica," United Nations, 1999.</li>
+      <li id="src-medina">R. B. Serjeant and other scholars on the "Constitution of Medina" (Mithaq al-Madina), c. 622 CE.</li>
+      <li id="src-schuman">Robert Schuman, the Schuman Declaration, 9 May 1950.</li>
+      <li id="src-iqbal">Muhammad Iqbal, Presidential Address to the All-India Muslim League, Allahabad, 1930 — historians' interpretations of the address diverge; see comparative treatments of Iqbal and the Pakistan Movement.</li>
+      <li id="src-fair">C. Christine Fair, research on militancy, madrasa economics, and radicalization in Pakistan.</li>
+      <li id="src-rauf">Feisal Abdul Rauf, <em>What's Right with Islam Is What's Right with America</em>, HarperOne, 2004.</li>
+      <li id="src-bhakti">Historical scholarship on the Bhakti movement, including the works and legacy of Kabir and Guru Nanak.</li>
+      <li id="src-econ">Kate Raworth, <em>Doughnut Economics</em>, 2017; Herman Daly on steady-state economics; Thomas Piketty on progressive wealth taxation; Tim Kasser on materialism and wellbeing.</li>
+    </ol>
+    <div class="toc-inline">
+      <a href="#law">Back to Law</a>
+      <a href="#education">Back to Education</a>
+      <a href="#compassion">Back to Compassion</a>
+      <a href="#top">Back to top</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>WorldTriangle — a proposal, offered for argument.</span>
+    <span>Diagnosis is sourced. The proposal is opinion.</span>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var canvas = document.getElementById('triangle-canvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function colors() {
+    var cs = getComputedStyle(document.documentElement);
+    return {
+      law: cs.getPropertyValue('--law').trim() || '#2C4A73',
+      education: cs.getPropertyValue('--education-bright').trim() || '#A8752B',
+      compassion: cs.getPropertyValue('--compassion').trim() || '#8C3B4C',
+      ink: cs.getPropertyValue('--ink').trim() || '#1C1812',
+      hairline: cs.getPropertyValue('--hairline').trim() || '#D9D0BC'
+    };
+  }
+
+  function resize() {
+    var rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    canvas.style.width = rect.width + 'px';
+    canvas.style.height = rect.height + 'px';
+  }
+
+  function draw(t) {
+    var w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    var c = colors();
+    var cx = w * 0.5, cy = h * 0.52, r = Math.min(w, h) * 0.38;
+
+    // procedural contour rings (topographic, no borders)
+    ctx.save();
+    ctx.globalAlpha = 0.35;
+    for (var ring = 0; ring < 7; ring++) {
+      var rr = r * (0.35 + ring * 0.11);
+      ctx.beginPath();
+      var steps = 90;
+      for (var i = 0; i <= steps; i++) {
+        var a = (i / steps) * Math.PI * 2;
+        var wob = Math.sin(a * 3 + ring * 1.3 + (reduceMotion ? 0 : t * 0.0002)) * (r * 0.035);
+        var x = cx + Math.cos(a) * (rr + wob);
+        var y = cy + Math.sin(a) * (rr + wob) * 0.86;
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = c.hairline;
+      ctx.lineWidth = 1 * dpr;
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // triangle vertices: Law (top), Education (bottom-left), Compassion (bottom-right)
+    var pulse = reduceMotion ? 0 : Math.sin(t * 0.0016) * 0.5 + 0.5;
+    var pts = [
+      { x: cx, y: cy - r, color: c.law, label: 'Law' },
+      { x: cx - r * 0.92, y: cy + r * 0.78, color: c.education, label: 'Education' },
+      { x: cx + r * 0.92, y: cy + r * 0.78, color: c.compassion, label: 'Compassion' }
+    ];
+
+    ctx.save();
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, pts[0].y);
+    ctx.lineTo(pts[1].x, pts[1].y);
+    ctx.lineTo(pts[2].x, pts[2].y);
+    ctx.closePath();
+    ctx.strokeStyle = c.ink;
+    ctx.lineWidth = 1.4 * dpr;
+    ctx.globalAlpha = 0.75;
+    ctx.stroke();
+    ctx.restore();
+
+    pts.forEach(function(p, idx) {
+      var rad = (7 + pulse * 2.4 * (idx === 0 ? 1 : 0.6)) * dpr;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, rad, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, rad + 4 * dpr, 0, Math.PI * 2);
+      ctx.strokeStyle = p.color;
+      ctx.globalAlpha = 0.3;
+      ctx.lineWidth = 1.2 * dpr;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    });
+
+    if (!reduceMotion) requestAnimationFrame(draw);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  requestAnimationFrame(draw);
+  if (reduceMotion) draw(0);
+})();
+</script>
+</body>
+</html>
